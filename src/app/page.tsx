@@ -1,6 +1,10 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import LoginForm from "./components/login-form";
 
 export default function Home() {
-  return <></>;
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  );
 }
