@@ -10,7 +10,7 @@
 }
 
 .list-pokemon-detail{
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .button{
@@ -18,3 +18,6 @@
   margin-right: 10px;
 }
 
+.button-pokemon-favorites{
+  font-size: 10px;
+}

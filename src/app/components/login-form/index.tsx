@@ -15,7 +15,7 @@ const LoginForm: React.FC = () => {
       await userService.login(username, password);
       router.push("/listPokemons");
     } catch (error) {
-      console.log(error);
+      alert("Error in credentials");
     }
   };
 

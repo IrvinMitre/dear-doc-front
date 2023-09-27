@@ -9,9 +9,12 @@ export class PokemonService {
       offset,
     };
 
-    const response = await axios.get("http://localhost:8002/v0/pokemons/getPokemons", {
-      params,
-    });
+    const response = await axios.get(
+      "http://localhost:8002/v0/pokemons/getPokemons",
+      {
+        params,
+      }
+    );
     return response.data as PokemonsApi;
   }
 
@@ -20,10 +23,23 @@ export class PokemonService {
       name,
     };
 
-    const response = await axios.get("http://localhost:8002/v0/pokemons/getFavoritesPokemons", {
-      params,
-    });
+    const response = await axios.get(
+      "http://localhost:8002/v0/pokemons/getFavoritesPokemons",
+      {
+        params,
+      }
+    );
     return response.data as Array<Pokemon>;
   }
 
+  async addFavoritepokemon(nameUser: string, namePokemon: string) {
+    const favoriteResponse = await axios.post(
+      "http://localhost:8002/v0/pokemons/addFavoritesPokemons",
+      {
+        nameUser,
+        namePokemon,
+      }
+    );
+    return favoriteResponse.data;
+  }
 }

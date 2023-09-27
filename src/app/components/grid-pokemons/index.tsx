@@ -9,6 +9,7 @@ import { UserService } from "@/app/services/users/userService";
 const GridPokemons: React.FC = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [page, setPage] = useState(1);
+  const [name, setName] = useState("");
   const [offset, setOffset] = useState(0);
   const limit = 9;
   const pokemonService = new PokemonService();
@@ -22,12 +23,14 @@ const GridPokemons: React.FC = () => {
   async function fetchData() {
     try {
       const responsePokemon = await pokemonService.getpokemons(limit, offset);
+      const name = await userService.getNameUser();
+      setName(name);
       setPokemons(responsePokemon.pokemons);
     } catch (error) {
       alert("Error getting Pokemons");
       throw error;
     }
-  };
+  }
 
   const handlePageChange = (newPage: number, offset: number) => {
     setPage(newPage);
@@ -35,11 +38,27 @@ const GridPokemons: React.FC = () => {
     fetchData();
   };
 
-  async function redirectToFavorites() {
-    const name = await userService.getNameUser();
-    const route = `/favoritesPokemons?name=${name}`
+  async function addFavorites(namePokemon: string) {
+    try {
+      const favorites = await pokemonService.addFavoritepokemon(
+        name,
+        namePokemon
+      );
+      if (favorites.code === 290) {
+        alert("Is in your Favorites");
+      } else {
+        alert("Added");
+      }
+    } catch (error) {
+      alert("Error add Pokemon");
+      throw error;
+    }
+  }
+
+  function redirectToFavorites() {
+    const route = `/favoritesPokemons?name=${name}`;
     router.push(route);
-  };
+  }
 
   return (
     <>
@@ -64,6 +83,15 @@ const GridPokemons: React.FC = () => {
                   <li>#{pokemon.id_poke_api}</li>
                   <li>Name: {pokemon.name}</li>
                   <li>Types: {pokemon.types.join(", ")}</li>
+                  <li>
+                    <Button
+                      className={styles["button-pokemon-favorites"]}
+                      variant="primary"
+                      onClick={async () => await addFavorites(pokemon.name)}
+                    >
+                      Add to Favorites
+                    </Button>
+                  </li>
                 </ul>
               </Card.Body>
             </Card>
