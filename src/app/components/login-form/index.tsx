@@ -42,7 +42,7 @@ const LoginForm: React.FC = () => {
             <button
               className={style["login-button"]}
               type="submit"
-              disabled={username === "" && password === ""}
+              disabled={username === "" && password === "" || username === "" || password === ""}
             >
               Login
             </button>

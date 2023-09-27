@@ -18,10 +18,10 @@ const GridPokemons: React.FC = () => {
   const userService = new UserService();
 
   useEffect(() => {
-    fetchData();
+    fetchData(limit, offset);
   }, []);
 
-  async function fetchData() {
+  async function fetchData(limit: number, offset: number) {
     try {
       const responsePokemon = await pokemonService.getpokemons(limit, offset);
       const name = await userService.getNameUser();
@@ -34,9 +34,10 @@ const GridPokemons: React.FC = () => {
   }
 
   const handlePageChange = (newPage: number, offset: number) => {
+    console.log(newPage, offset);
     setPage(newPage);
     setOffset(offset);
-    fetchData();
+    fetchData(limit, offset);
   };
 
   async function addFavorites(namePokemon: string) {
@@ -68,8 +69,7 @@ const GridPokemons: React.FC = () => {
         setPokemons(pokemonsList);
       } else {
         setPage(1);
-        setOffset(0);
-        fetchData();
+        fetchData(limit, 0);
       }
     } catch (error) {
       alert("Error Searching");
@@ -97,7 +97,10 @@ const GridPokemons: React.FC = () => {
           />
         </Col>
         <Col>
-          <Button className={styles.button} onClick={() => searchPokemon()}>
+          <Button
+            className={styles["button-search"]}
+            onClick={() => searchPokemon()}
+          >
             Search
           </Button>
         </Col>
@@ -130,12 +133,17 @@ const GridPokemons: React.FC = () => {
             </Card>
           </Col>
         ))}
+        {pokemons?.length === 0 && (
+          <Col xs={12} md={3}>
+            <p>No Pokemons found</p>
+          </Col>
+        )}
       </Row>
       <Row className="justify-content-center pt-4 pb-2">
         <Col md={5}>
           <Button
             className={styles.button}
-            onClick={() => handlePageChange(page - 1, offset - limit)}
+            onClick={() => handlePageChange(page - 1, offset - 9)}
             disabled={page <= 1 || search != ""}
           >
             Previous
@@ -145,7 +153,7 @@ const GridPokemons: React.FC = () => {
 
           <Button
             className={styles.button}
-            onClick={() => handlePageChange(page + 1, offset + limit)}
+            onClick={() => handlePageChange(page + 1, offset + 9)}
             disabled={pokemons.length < limit || search != ""}
           >
             Next
