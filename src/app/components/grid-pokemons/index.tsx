@@ -34,7 +34,6 @@ const GridPokemons: React.FC = () => {
   }
 
   const handlePageChange = (newPage: number, offset: number) => {
-    console.log(newPage, offset);
     setPage(newPage);
     setOffset(offset);
     fetchData(limit, offset);
