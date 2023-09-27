@@ -14,4 +14,15 @@ export class UserService {
     localStorage.setItem("jwt", response.data.jwt);
     localStorage.setItem("refresh_jwt", response.data.refresh_jwt);
   }
+
+  async getNameUser() {
+    const encryptedname = localStorage.getItem("jwt");
+    let name = "";
+    if (encryptedname) {
+      const [header, payload, signature] = encryptedname.split(".");
+      const decodedPayload = JSON.parse(atob(payload));
+      name = decodedPayload.name;
+    }
+    return name;
+  }
 }

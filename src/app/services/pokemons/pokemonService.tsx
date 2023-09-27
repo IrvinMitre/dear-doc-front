@@ -1,3 +1,4 @@
+import { Pokemon } from "@/app/interfaces/pokemon.interfaces";
 import { PokemonsApi } from "@/app/interfaces/pokemonsApi.interface";
 import axios from "axios";
 
@@ -13,4 +14,16 @@ export class PokemonService {
     });
     return response.data as PokemonsApi;
   }
+
+  async getFavoritespokemons(name: string) {
+    const params = {
+      name,
+    };
+
+    const response = await axios.get("http://localhost:8002/v0/pokemons/getFavoritesPokemons", {
+      params,
+    });
+    return response.data as Array<Pokemon>;
+  }
+
 }
