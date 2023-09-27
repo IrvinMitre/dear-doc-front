@@ -20,7 +20,7 @@ const FavoritesListPokemons: React.FC = () => {
     try {
       const name = searchParams.get("name") as string;
 
-      const responsePokemon = await pokemonService.getFavoritespokemons(name);
+      const responsePokemon = await pokemonService.getFavoritesPokemons(name);
       setPokemons(responsePokemon);
     } catch (error) {
       console.error("Error fetching tickets:", error);

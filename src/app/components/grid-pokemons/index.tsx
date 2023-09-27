@@ -23,7 +23,7 @@ const GridPokemons: React.FC = () => {
 
   async function fetchData(limit: number, offset: number) {
     try {
-      const responsePokemon = await pokemonService.getpokemons(limit, offset);
+      const responsePokemon = await pokemonService.getPokemons(limit, offset);
       const name = await userService.getNameUser();
       setName(name);
       setPokemons(responsePokemon.pokemons);
@@ -41,17 +41,17 @@ const GridPokemons: React.FC = () => {
 
   async function addFavorites(namePokemon: string) {
     try {
-      const favorites = await pokemonService.addFavoritepokemon(
+      const favorites = await pokemonService.addFavoritePokemon(
         name,
         namePokemon
       );
       if (favorites.code === 290) {
-        alert("Is in your Favorites");
+        alert("Already in you Favorites");
       } else {
-        alert("Added");
+        alert("Pokemon Added to favorites");
       }
     } catch (error) {
-      alert("Error add Pokemon");
+      alert("Error adding a Pokemon");
       throw error;
     }
   }
@@ -89,7 +89,6 @@ const GridPokemons: React.FC = () => {
         <Col lg="3">
           <input
             className={styles["search-input"]}
-            autoComplete="current-password"
             type="text"
             placeholder="Search"
             onChange={(e) => setSearch(e.target.value)}
@@ -142,7 +141,7 @@ const GridPokemons: React.FC = () => {
         <Col md={5}>
           <Button
             className={styles.button}
-            onClick={() => handlePageChange(page - 1, offset - 9)}
+            onClick={() => handlePageChange(page - 1, offset - limit)}
             disabled={page <= 1 || search != ""}
           >
             Previous
@@ -152,7 +151,7 @@ const GridPokemons: React.FC = () => {
 
           <Button
             className={styles.button}
-            onClick={() => handlePageChange(page + 1, offset + 9)}
+            onClick={() => handlePageChange(page + 1, offset + limit)}
             disabled={pokemons.length < limit || search != ""}
           >
             Next

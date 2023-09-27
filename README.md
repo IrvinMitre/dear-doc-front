@@ -9,7 +9,7 @@ This project consists of an front-end with TypeScript and Next.js 13.
 ## Features
 
 - Login
-- List Pkemons
+- List Pokémons
 - Search Pokémon
 - List favorites Pokémons
 
@@ -38,7 +38,7 @@ To run this frontend application, you'll need to follow these steps:
 
 4. Enter in broser to local http://localhost:3000/
 
-5. Use the crential
+5. Use the credentials
 
    ```bash
    user: Irvin

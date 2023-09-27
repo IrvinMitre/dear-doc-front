@@ -3,7 +3,7 @@ import { PokemonsApi } from "@/app/interfaces/pokemonsApi.interface";
 import axios from "axios";
 
 export class PokemonService {
-  async getpokemons(limit: number, offset: number) {
+  async getPokemons(limit: number, offset: number) {
     const params = {
       limit,
       offset,
@@ -18,7 +18,7 @@ export class PokemonService {
     return response.data as PokemonsApi;
   }
 
-  async getFavoritespokemons(name: string) {
+  async getFavoritesPokemons(name: string) {
     const params = {
       name,
     };
@@ -32,7 +32,7 @@ export class PokemonService {
     return response.data as Array<Pokemon>;
   }
 
-  async addFavoritepokemon(nameUser: string, namePokemon: string) {
+  async addFavoritePokemon(nameUser: string, namePokemon: string) {
     const favoriteResponse = await axios.post(
       "http://localhost:8002/v0/pokemons/addFavoritesPokemons",
       {
@@ -47,12 +47,12 @@ export class PokemonService {
     const params = {
       name,
     };
-    const favoriteResponse = await axios.get(
+    const searchResponse = await axios.get(
       "http://localhost:8002/v0/pokemons/searchPokemons",
       {
         params,
       }
     );
-    return favoriteResponse.data as Array<Pokemon>;
+    return searchResponse.data as Array<Pokemon>;
   }
 }
