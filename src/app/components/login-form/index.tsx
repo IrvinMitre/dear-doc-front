@@ -27,7 +27,7 @@ const LoginForm: React.FC = () => {
             <input
               className={style.input}
               type="text"
-              placeholder="Nombre"
+              placeholder="Name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />

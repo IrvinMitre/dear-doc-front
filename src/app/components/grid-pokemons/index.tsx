@@ -11,6 +11,7 @@ const GridPokemons: React.FC = () => {
   const [page, setPage] = useState(1);
   const [name, setName] = useState("");
   const [offset, setOffset] = useState(0);
+  const [search, setSearch] = useState("");
   const limit = 9;
   const pokemonService = new PokemonService();
   const router = useRouter();
@@ -60,12 +61,44 @@ const GridPokemons: React.FC = () => {
     router.push(route);
   }
 
+  async function searchPokemon() {
+    try {
+      if (search != "") {
+        const pokemonsList = await pokemonService.searchpokemon(search);
+        setPokemons(pokemonsList);
+      } else {
+        setPage(1);
+        setOffset(0);
+        fetchData();
+      }
+    } catch (error) {
+      alert("Error Searching");
+      throw error;
+    }
+  }
+
   return (
     <>
       <Row className="justify-content-end pt-2">
         <Col lg="3">
           <Button className={styles.button} onClick={redirectToFavorites}>
             Favorites
+          </Button>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col lg="3">
+          <input
+            className={styles["search-input"]}
+            autoComplete="current-password"
+            type="text"
+            placeholder="Search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </Col>
+        <Col>
+          <Button className={styles.button} onClick={() => searchPokemon()}>
+            Search
           </Button>
         </Col>
       </Row>
@@ -103,7 +136,7 @@ const GridPokemons: React.FC = () => {
           <Button
             className={styles.button}
             onClick={() => handlePageChange(page - 1, offset - limit)}
-            disabled={page <= 1}
+            disabled={page <= 1 || search != ""}
           >
             Previous
           </Button>
@@ -113,7 +146,7 @@ const GridPokemons: React.FC = () => {
           <Button
             className={styles.button}
             onClick={() => handlePageChange(page + 1, offset + limit)}
-            disabled={pokemons.length < limit}
+            disabled={pokemons.length < limit || search != ""}
           >
             Next
           </Button>

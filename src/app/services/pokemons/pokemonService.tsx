@@ -42,4 +42,17 @@ export class PokemonService {
     );
     return favoriteResponse.data;
   }
+
+  async searchpokemon(name: string) {
+    const params = {
+      name,
+    };
+    const favoriteResponse = await axios.get(
+      "http://localhost:8002/v0/pokemons/searchPokemons",
+      {
+        params,
+      }
+    );
+    return favoriteResponse.data as Array<Pokemon>;
+  }
 }

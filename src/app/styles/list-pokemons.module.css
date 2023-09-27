@@ -21,3 +21,18 @@
 .button-pokemon-favorites{
   font-size: 10px;
 }
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background: transparent;
+  color: black;
+}
+
+.search-input:focus {
+  border-color: #666;
+  outline: none;
+}
